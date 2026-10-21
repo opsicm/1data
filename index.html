@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard & Portal Data - SMA IT Insan Cendekia Madani</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-emerald-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-md">
+                    <i class="fa-solid fa-chart-line text-2xl text-emerald-200"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">DASHBOARD PORTAL DATA SEKOLAH</h1>
+                    <p class="text-xs text-emerald-100">SMA IT INSAN CENDEKIA MADANI • Gunung Geulis, Bogor</p>
+                </div>
+            </div>
+            <div class="text-xs bg-emerald-900/80 border border-emerald-500/30 px-3.5 py-1.5 rounded-full flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Semester 20261 (Ganjil)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+        <!-- NAVIGATION TABS -->
+        <div class="flex border-b border-slate-200 mb-6 gap-2 overflow-x-auto">
+            <button id="tab-dash" onclick="switchTab('dash')" class="tab-btn py-3 px-5 text-sm font-bold rounded-t-xl border-b-2 border-emerald-600 text-emerald-700 bg-white shadow-sm flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Dashboard Utama</span>
+            </button>
+            <button id="tab-pd" onclick="switchTab('pd')" class="tab-btn py-3 px-5 text-sm font-semibold text-slate-500 hover:text-slate-700 rounded-t-xl flex items-center gap-2">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>Peserta Didik</span>
+                <span id="badge-pd" class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-bold ml-1">63</span>
+            </button>
+            <button id="tab-ptk" onclick="switchTab('ptk')" class="tab-btn py-3 px-5 text-sm font-semibold text-slate-500 hover:text-slate-700 rounded-t-xl flex items-center gap-2">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                <span>Guru & Tendik</span>
+                <span id="badge-ptk" class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-bold ml-1">14</span>
+            </button>
+            <button id="tab-pemb" onclick="switchTab('pemb')" class="tab-btn py-3 px-5 text-sm font-semibold text-slate-500 hover:text-slate-700 rounded-t-xl flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Pembelajaran</span>
+                <span id="badge-pemb" class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-bold ml-1">31</span>
+            </button>
+        </div>
+
+        <!-- ================= TAB CONTENT: DASHBOARD ANALYTICS ================= -->
+        <div id="content-dash" class="tab-content space-y-6">
+            
+            <!-- Metric Cards (Top Widgets) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Card 1 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Peserta Didik</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mt-1">63 <span class="text-xs font-normal text-slate-500">Siswa</span></h3>
+                        <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-mars-and-venus mr-1"></i>28 L | 35 P</p>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Guru & Tendik</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mt-1">14 <span class="text-xs font-normal text-slate-500">Orang</span></h3>
+                        <p class="text-xs text-indigo-600 font-medium mt-1"><i class="fa-solid fa-chalkboard-user mr-1"></i>10 Guru | 4 Tendik</p>
+                    </div>
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Rombel / Mapel</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mt-1">31 <span class="text-xs font-normal text-slate-500">Mapel</span></h3>
+                        <p class="text-xs text-amber-600 font-medium mt-1"><i class="fa-solid fa-layer-group mr-1"></i>3 Tingkatan Kelas</p>
+                    </div>
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total JJM</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mt-1">111 <span class="text-xs font-normal text-slate-500">Jam/Wk</span></h3>
+                        <p class="text-xs text-teal-600 font-medium mt-1"><i class="fa-solid fa-clock mr-1"></i>Beban Mengajar</p>
+                    </div>
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-business-time"></i>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Rasio Siswa/Guru</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800 mt-1">6,3 <span class="text-xs font-normal text-slate-500">: 1</span></h3>
+                        <p class="text-xs text-blue-600 font-medium mt-1"><i class="fa-solid fa-circle-check mr-1"></i>Sangat Ideal</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid Row 1 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Chart 1: Siswa per Kelas -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-chart-column text-emerald-600"></i> Siswa per Tingkat Kelas
+                        </h4>
+                        <span class="text-xs text-slate-400">Tahun 2026</span>
+                    </div>
+                    <div class="h-60">
+                        <canvas id="chartSiswaKelas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Demografi Gender -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-indigo-600"></i> Komposisi Gender Siswa
+                        </h4>
+                        <span class="text-xs text-slate-400">Rasio L/P</span>
+                    </div>
+                    <div class="h-60 flex justify-center items-center">
+                        <canvas id="chartGenderSiswa"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Kualifikasi NUPTK -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-certificate text-amber-600"></i> Kualifikasi NUPTK Guru
+                        </h4>
+                        <span class="text-xs text-slate-400">14 PTK</span>
+                    </div>
+                    <div class="h-60 flex justify-center items-center">
+                        <canvas id="chartNuptkPTK"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid Row 2 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Chart 4: Beban JJM per Guru (Wide Span) -->
+                <div class="lg:col-span-2 bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-user-clock text-teal-600"></i> Beban Jam Mengajar (JJM) per Guru
+                        </h4>
+                        <span class="text-xs text-slate-400">Jam / Minggu</span>
+                    </div>
+                    <div class="h-72">
+                        <canvas id="chartGuruJJM"></canvas>
+                    </div>
+                </div>
+
+                <!-- Profil Info Sekolah -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+                            <div class="p-3 bg-emerald-100 text-emerald-800 rounded-xl">
+                                <i class="fa-solid fa-school-flag text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Profil Sekolah</h4>
+                                <p class="text-xs text-slate-400">SMA IT ICM Gunung Geulis</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 text-xs">
+                            <li class="flex justify-between py-1.5 border-b border-slate-50">
+                                <span class="text-slate-400">NPSN:</span>
+                                <span class="font-mono font-bold text-slate-800">70010104</span>
+                            </li>
+                            <li class="flex justify-between py-1.5 border-b border-slate-50">
+                                <span class="text-slate-400">Kecamatan:</span>
+                                <span class="font-semibold text-slate-700">Kec. Sukaraja</span>
+                            </li>
+                            <li class="flex justify-between py-1.5 border-b border-slate-50">
+                                <span class="text-slate-400">Kabupaten/Kota:</span>
+                                <span class="font-semibold text-slate-700">Kab. Bogor</span>
+                            </li>
+                            <li class="flex justify-between py-1.5 border-b border-slate-50">
+                                <span class="text-slate-400">Provinsi:</span>
+                                <span class="font-semibold text-slate-700">Prov. Jawa Barat</span>
+                            </li>
+                            <li class="flex justify-between py-1.5 border-b border-slate-50">
+                                <span class="text-slate-400">Kurikulum:</span>
+                                <span class="font-semibold text-emerald-700">Kurikulum Merdeka</span>
+                            </li>
+                            <li class="flex justify-between py-1.5">
+                                <span class="text-slate-400">Kepala Sekolah:</span>
+                                <span class="font-bold text-slate-800">Zahrudin, S.Pd.I</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <button onclick="switchTab('pd')" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2">
+                            <span>Lihat Detail Data Siswa</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SEARCH BAR FOR DATA TABLES (Hidden on Dashboard) -->
+        <div id="searchContainer" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 mb-6">
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                <div class="relative w-full md:w-2/3">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </span>
+                    <input type="text" id="searchInput" onkeyup="filterData()" 
+                           placeholder="Cari Nama Siswa, NISN, NIK, Nama Guru, NUPTK, atau Mapel..." 
+                           class="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-sm font-medium">
+                    <button onclick="clearSearch()" id="clearBtn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+                <div class="w-full md:w-1/3 flex gap-2">
+                    <select id="rombelFilter" onchange="filterData()" class="w-full py-3 px-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <option value="">Semua Rombel / Kelas</option>
+                        <option value="Kelas 10">Kelas 10</option>
+                        <option value="Kelas 11">Kelas 11</option>
+                        <option value="Kelas 12">Kelas 12</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB CONTENT: PESERTA DIDIK ================= -->
+        <div id="content-pd" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs uppercase bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-3">No</th>
+                                <th class="px-4 py-3">Nama Siswa</th>
+                                <th class="px-4 py-3">Rombel</th>
+                                <th class="px-4 py-3">NISN</th>
+                                <th class="px-4 py-3">NIK</th>
+                                <th class="px-4 py-3">JK</th>
+                                <th class="px-4 py-3">TTL</th>
+                                <th class="px-4 py-3 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-pd-body" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB CONTENT: GURU & TENDIK ================= -->
+        <div id="content-ptk" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs uppercase bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-3">No</th>
+                                <th class="px-4 py-3">Nama Lengkap</th>
+                                <th class="px-4 py-3">Jenis PTK</th>
+                                <th class="px-4 py-3">NUPTK</th>
+                                <th class="px-4 py-3">NIK</th>
+                                <th class="px-4 py-3">JK</th>
+                                <th class="px-4 py-3">No HP / WA</th>
+                                <th class="px-4 py-3 text-center">Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-ptk-body" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB CONTENT: PEMBELAJARAN ================= -->
+        <div id="content-pemb" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs uppercase bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-3">Rombel</th>
+                                <th class="px-4 py-3">Mata Pelajaran</th>
+                                <th class="px-4 py-3">Guru Pengampu</th>
+                                <th class="px-4 py-3">NUPTK</th>
+                                <th class="px-4 py-3 text-center">JJM</th>
+                                <th class="px-4 py-3 text-center">Jml Siswa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-pemb-body" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL DETAIL -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                <h3 class="text-lg font-bold text-slate-800" id="modalTitle">Detail Informasi</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div id="modalBody" class="py-4 text-sm space-y-3"></div>
+            <div class="pt-4 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-medium text-sm">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3 text-sm transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMsg">Teks berhasil disalin!</span>
+    </div>
+
+    <script>
+        // DATA EXCEL DAPODIK LENGKAP (100% ASLI)
+        const dataPD = [{"no": 1, "nama": "ABDILLAH SALAM IDRIS", "nipd": "262711001", "jk": "L", "nisn": "3117777432", "ttl": "JAKARTA, 2011-05-10", "nik": "3174061005111012", "rombel": "Kelas 10", "ayah": "Muhamad Sahel", "ibu": "DINA IHYA DZAFIRAH", "kk": "3174060812100082", "alamat": "Jl. Cilandak Tengah III Desa/Kel. Cilandak Barat"}, {"no": 2, "nama": "ABDUR RAHMAN", "nipd": "262711002", "jk": "L", "nisn": "0105491764", "ttl": "PEKANBARU, 2010-07-17", "nik": "1471081707100002", "rombel": "Kelas 10", "ayah": "Mulyadi", "ibu": "Zainab", "kk": "1471083112100021", "alamat": "Jl. Saudara Desa/Kel. Tuahmadani"}, {"no": 3, "nama": "AINUN MARDIYAH", "nipd": "262711003", "jk": "P", "nisn": "0111344644", "ttl": "Serang, 2011-02-07", "nik": "3604154702110001", "rombel": "Kelas 10", "ayah": "MISBAH", "ibu": "Siti Romlah", "kk": "3604151202073782", "alamat": "Perum Puri Teratai Desa/Kel. Situterate"}, {"no": 4, "nama": "ALBAR HIZBI", "nipd": "252610002", "jk": "L", "nisn": "0096924795", "ttl": "Tasikmalaya, 2009-05-25", "nik": "3278052505090006", "rombel": "Kelas 11", "ayah": "TENDI SUTENDI", "ibu": "Alia Nuryasin", "kk": "3278051910200007", "alamat": "Cipari Kawalu"}, {"no": 5, "nama": "Almira Dzakiyyah Alie", "nipd": "242509001", "jk": "P", "nisn": "0093706671", "ttl": "Tangerang, 2009-02-03", "nik": "3671114302090001", "rombel": "Kelas 12", "ayah": "Ngatiyo", "ibu": "LILIS KUSMIATI, SE", "kk": "3671111909070461", "alamat": "Kebon Nanas Panunggangan Utara"}, {"no": 6, "nama": "ALVIN MAULANA HILMI", "nipd": "252610001", "jk": "L", "nisn": "0091825072", "ttl": "JAKARTA, 2009-05-11", "nik": "3172031105091002", "rombel": "Kelas 11", "ayah": "MUHAMMAD IDRIS", "ibu": "NENY RACHMAT", "kk": "3172030801093567", "alamat": "Jl. Cibanteng Raya No. 49 Desa/Kel. Koja"}, {"no": 7, "nama": "AMIRA NAYIFAH IQRO", "nipd": "262711004", "jk": "P", "nisn": "0095713593", "ttl": "JAKARTA, 2009-05-11", "nik": "3172045105091003", "rombel": "Kelas 10", "ayah": "Ikro Rosyadi", "ibu": "SITI MARIYAH", "kk": "3172041301097446", "alamat": "Jl. Kesemek No. 04 Desa/Kel. Semper Barat"}, {"no": 8, "nama": "ANDI TITIN KHUMAIRA", "nipd": "242509012", "jk": "P", "nisn": "0097064929", "ttl": "MALUKU TENGAH, 2009-10-24", "nik": "8101116410090001", "rombel": "Kelas 12", "ayah": "ERWIN HAYOTO", "ibu": "NURJANNA WAILISSA", "kk": "8101113012140004", "alamat": "Haya Desa/Kel. Haya"}, {"no": 9, "nama": "Chelsy Oktavia Maharani", "nipd": "242509005", "jk": "P", "nisn": "0085128070", "ttl": "Tangerang, 2008-10-23", "nik": "3674036310080009", "rombel": "Kelas 12", "ayah": "Syah Maulana Ikhsan", "ibu": "Retno Purwanti", "kk": "3674030512160017", "alamat": "Jl. H. Sarmili Jurang Mangu Barat"}, {"no": 10, "nama": "DINA ALMIRA", "nipd": "252610003", "jk": "P", "nisn": "0094870157", "ttl": "KABUPATEN BOGOR, 2009-06-07", "nik": "3201044706090005", "rombel": "Kelas 11", "ayah": "SAID RUSWANDI", "ibu": "TUTI HARYATI", "kk": "3201041210200028", "alamat": "GUNUNG GEULIS ASRI A-2 Gunung Geulis"}, {"no": 11, "nama": "DWI JUMEY RAGUNA", "nipd": "252610004", "jk": "P", "nisn": "0102849506", "ttl": "Lubuklinggau, 2010-05-07", "nik": "1605054705100001", "rombel": "Kelas 11", "ayah": "SERBAGUNA", "ibu": "Siska Anggraini", "kk": "1613022910070030", "alamat": "DS.REMBAN REMBAN"}, {"no": 12, "nama": "FIKRIY ATHAILLAH SAPUTRA", "nipd": "252610005", "jk": "L", "nisn": "3094427398", "ttl": "Lumajang, 2009-03-30", "nik": "3508173003090002", "rombel": "Kelas 11", "ayah": "-", "ibu": "Fitri Handayani", "kk": "-", "alamat": "Perum Griya Candramas blok IP 40 Pepe"}, {"no": 13, "nama": "GHINA NUR ATSIL", "nipd": "252610023", "jk": "P", "nisn": "3097039406", "ttl": "JAKARTA, 2009-02-02", "nik": "3174094202090002", "rombel": "Kelas 11", "ayah": "Endang Hidayat", "ibu": "INDRIYANI", "kk": "3174090901098925", "alamat": "JL. MANGGIS NO. 17 CIGANJUR"}, {"no": 14, "nama": "HALWA ALIA SYARIF", "nipd": "262711005", "jk": "P", "nisn": "3100719968", "ttl": "Jakarta, 2010-07-23", "nik": "3174076307101003", "rombel": "Kelas 10", "ayah": "Saripudin", "ibu": "Siti Komariah", "kk": "3175070301111036", "alamat": "Jl. Pahlawan Revolusi No.11 Pondok Bambu"}, {"no": 15, "nama": "HELLA NUROTUN NAFISAH", "nipd": "262711006", "jk": "P", "nisn": "0108189761", "ttl": "PANDEGLANG, 2010-11-04", "nik": "3601354411100002", "rombel": "Kelas 10", "ayah": "Ahmad Nawawi Abas", "ibu": "JULAEHA", "kk": "3601350901080344", "alamat": "KP. Kelapa Cagak Teluklada"}, {"no": 16, "nama": "HILMI AL-MAISAN ZHAFAR", "nipd": "262711007", "jk": "L", "nisn": "0109380775", "ttl": "MAGELANG, 2010-05-12", "nik": "3201011205100005", "rombel": "Kelas 10", "ayah": "ROHMAD WIBOWO", "ibu": "HENI RATNANINGSIH", "kk": "3201011509080011", "alamat": "Cipayung Tengah"}, {"no": 17, "nama": "ISMI AULIA FIRDAUS", "nipd": "262711008", "jk": "P", "nisn": "0086155290", "ttl": "Cimahi, 2008-08-19", "nik": "3273055908080002", "rombel": "Kelas 10", "ayah": "DIDIN AWALUDIN", "ibu": "FONNA RATNA WIRIANTI", "kk": "3273051108101371", "alamat": "Cimindi Utara Campaka"}, {"no": 18, "nama": "JASMINE RAIHANA JUNAIDAH", "nipd": "262711009", "jk": "P", "nisn": "0115879412", "ttl": "Bekasi, 2011-01-02", "nik": "3216084201110006", "rombel": "Kelas 10", "ayah": "DEDEN JUNAEDI", "ibu": "RETMIMORI", "kk": "3216080703140080", "alamat": "Kp. Rawa Asri Telagamurni"}, {"no": 19, "nama": "KARUNIA RIVANA PUTRI", "nipd": "242509011", "jk": "P", "nisn": "0095736713", "ttl": "KOTABUMI, 2009-06-01", "nik": "1803114106090002", "rombel": "Kelas 12", "ayah": "HERI SUSANTO", "ibu": "LIANA", "kk": "1803111807070394", "alamat": "HANURA GUNUNG BESAR"}, {"no": 20, "nama": "Kazuo Raqilla Alamanda", "nipd": "262711010", "jk": "L", "nisn": "0112990477", "ttl": "Jakarta, 2011-03-25", "nik": "5103052503110002", "rombel": "Kelas 10", "ayah": "Raditya Alamanda", "ibu": "Viola fitrina", "kk": "5103050803100089", "alamat": "Nuansa Barat III No 4 Taman Griya Jimbaran"}, {"no": 21, "nama": "KENNARD AULIA AL BASITH", "nipd": "262711011", "jk": "L", "nisn": "3100038384", "ttl": "Bandung, 2010-10-13", "nik": "3277011310100010", "rombel": "Kelas 10", "ayah": "IRWAN AULIA UR RUHMAN", "ibu": "SOFFI WIDYANA", "kk": "3277011501100081", "alamat": "Jl Melong Blok Sakola No 86 Desa/Kel. Melong"}, {"no": 22, "nama": "KRISHNA AL KAHFI", "nipd": "262711012", "jk": "L", "nisn": "0104287658", "ttl": "JAKARTA, 2010-07-22", "nik": "3173062207101001", "rombel": "Kelas 10", "ayah": "MUHAMMAD DAUD", "ibu": "DEWI PUSPITA", "kk": "3173060610101008", "alamat": "JL. KP. MALANG Semanan"}, {"no": 23, "nama": "KURNIA HANUM ARI SAPUTRA", "nipd": "262711013", "jk": "P", "nisn": "0106539364", "ttl": "JAKARTA, 2010-10-13", "nik": "3173025310101005", "rombel": "Kelas 10", "ayah": "WAKIRI", "ibu": "KUN FARIDA", "kk": "3173022312090003", "alamat": "JL. BIDARA Desa/Kel. Wijaya Kesuma"}, {"no": 24, "nama": "M OCTA ABIDIN", "nipd": "252610006", "jk": "L", "nisn": "0091403897", "ttl": "BOGOR, 2009-10-26", "nik": "3271062610090006", "rombel": "Kelas 11", "ayah": "YAKUB ABIDIN", "ibu": "SALAMAH", "kk": "3271060510150007", "alamat": "KP. BOJONG JENGKOL CILEBUT BARAT"}, {"no": 25, "nama": "MIA RAMADANI", "nipd": "262711014", "jk": "P", "nisn": "0106863985", "ttl": "SERANG, 2010-08-28", "nik": "3673056808100003", "rombel": "Kelas 10", "ayah": "PANDI", "ibu": "SANTIMAH", "kk": "3673052109210007", "alamat": "LINGK. CIGINTUNG GELAM"}, {"no": 26, "nama": "MUHAMAD KHOLIFATUL ANNAM", "nipd": "262711019", "jk": "L", "nisn": "0109879353", "ttl": "PURWODADI SIMPANG, 2010-12-15", "nik": "1801051512100008", "rombel": "Kelas 10", "ayah": "PARYONO", "ibu": "LIANA", "kk": "1801050811120057", "alamat": "Purwodadi SImpang PURWODADI SIMPANG"}, {"no": 27, "nama": "MUHAMAD NUR HUSNI FAUZI", "nipd": "242509013", "jk": "L", "nisn": "0096729840", "ttl": "PANDEGLANG, 2009-09-13", "nik": "3601061309090003", "rombel": "Kelas 12", "ayah": "KARIS MAULANA", "ibu": "LIA SAPITRI", "kk": "3601061210190008", "alamat": "KP LEBAK BUAH Desa/Kel. Citeureup"}, {"no": 28, "nama": "MUHAMAD RIDHO RAMADHAN", "nipd": "262711020", "jk": "L", "nisn": "0088226123", "ttl": "JAKARTA, 2009-08-25", "nik": "3173012508091010", "rombel": "Kelas 10", "ayah": "HAPSAH", "ibu": "HAPSAH", "kk": "3173012106120024", "alamat": "JL.H.MALI DURI KOSAMBI"}, {"no": 29, "nama": "MUHAMMAD ALFARID", "nipd": "252610008", "jk": "L", "nisn": "0097168022", "ttl": "LHOKSEUMAWE, 2009-04-16", "nik": "1173011604090002", "rombel": "Kelas 11", "ayah": "LUKMANUL HAKIM", "ibu": "YUS PUTRI NANDA SARI", "kk": "3173081408141019", "alamat": "JL.ATLANTA 2 NO.53 PURI MANSION KEMBANGAN SELATAN"}, {"no": 30, "nama": "MUHAMMAD BADILAH", "nipd": "262711015", "jk": "L", "nisn": "0104857429", "ttl": "Jakarta, 2010-04-28", "nik": "3173012804100002", "rombel": "Kelas 10", "ayah": "Abidin", "ibu": "Siti Fatimah", "kk": "3173011801093085", "alamat": "Jl. H. Mali Duri Kosambi"}, {"no": 31, "nama": "MUHAMMAD DZAKWAN AZMI WIYANA", "nipd": "262711016", "jk": "L", "nisn": "0119441643", "ttl": "Bandar Lampung, 2011-01-23", "nik": "1871132301110001", "rombel": "Kelas 10", "ayah": "WIYANA", "ibu": "HARTINI", "kk": "1871132703090012", "alamat": "Jl. Cik Ditiro Perum Wisma Mas Bok S 11 No. 4 Sumberrejo Sejahtera"}, {"no": 32, "nama": "MUHAMMAD EKMAL FATIH", "nipd": "252610007", "jk": "L", "nisn": "3102102373", "ttl": "JAKARTA, 2010-05-18", "nik": "3174061805101004", "rombel": "Kelas 11", "ayah": "MUHAMMAD AMINULLAH", "ibu": "YULIANA", "kk": "3174061201096292", "alamat": "JL CILANDAK TENGAH III/53 CILANDAK BARAT"}, {"no": 33, "nama": "Muhammad ElFazil", "nipd": "262711018", "jk": "L", "nisn": "0114988534", "ttl": "Lhokseumawe, 2011-04-17", "nik": "1173011704110001", "rombel": "Kelas 10", "ayah": "Lukman", "ibu": "Yus Putri Nanda Sari", "kk": "3173081408141019", "alamat": "Jl. Atlanta 3 No. 10 Puri Mansion, Kembangan Selatan Desa/Kel. Kembangan Selatan"}, {"no": 34, "nama": "MUHAMMAD GAVRA PUTRA KHAIRI", "nipd": "252610009", "jk": "L", "nisn": "0104879687", "ttl": "DEPOK, 2010-01-28", "nik": "3276022801100006", "rombel": "Kelas 11", "ayah": "ZULHAIRI A", "ibu": "DESSY AFIANTI MUTHIA", "kk": "3276020510090010", "alamat": "JL. PADI TRAKTOR I BLOK B2/15 Desa/Kel. Mekarsari"}, {"no": 35, "nama": "MUHAMMAD PAIS", "nipd": "262711017", "jk": "L", "nisn": "0114697780", "ttl": "Tanjung, 2011-07-16", "nik": "1502051607110002", "rombel": "Kelas 10", "ayah": "Junaidi", "ibu": "SITI MAISAROH", "kk": "1502051311140010", "alamat": "Kp Baruh KELURAHAN KAMPUNG BARUH"}, {"no": 36, "nama": "MUHAMMAD PATIH DIRGAWANE", "nipd": "252610010", "jk": "L", "nisn": "0092858794", "ttl": "JAKARTA, 2009-07-08", "nik": "3173050807091006", "rombel": "Kelas 11", "ayah": "MUHAMMAD RIFAI", "ibu": "ACHMARIVA ACHYAR GANI", "kk": "-", "alamat": "JL ADAM NO 48 SUKABUMI UTARA"}, {"no": 37, "nama": "MUHAMMAD RAFA AZAMI", "nipd": "252610011", "jk": "L", "nisn": "3092257276", "ttl": "Jakarta, 2009-10-15", "nik": "3174061510091002", "rombel": "Kelas 11", "ayah": "AHMAD FAHMI", "ibu": "Asmarany", "kk": "3174061005111011", "alamat": "Jl.cilandak dalam Desa/Kel. Cilandak Barat"}, {"no": 38, "nama": "MUHAMMAD THAUFAN DWIKA SWANDI", "nipd": "252610012", "jk": "L", "nisn": "0109553758", "ttl": "JAKARTA, 2010-04-25", "nik": "3174082504101002", "rombel": "Kelas 11", "ayah": "HASWANDI", "ibu": "SRI DEWI MARTINI", "kk": "3174081001099615", "alamat": "Jl. Samali Ujung No.30 Kalibata"}, {"no": 39, "nama": "Nabila Syafitri", "nipd": "242509014", "jk": "P", "nisn": "0097705455", "ttl": "Sabang, 2009-09-29", "nik": "1172016909090001", "rombel": "Kelas 12", "ayah": "HENDRA WAHYUDI", "ibu": "Ermawati", "kk": "1172010202110002", "alamat": "JURONG IBIOH Iboih"}, {"no": 40, "nama": "Nadya Salwa", "nipd": "252610013", "jk": "P", "nisn": "0098786130", "ttl": "Bogor, 2009-10-29", "nik": "3271046910090007", "rombel": "Kelas 11", "ayah": "Agus Supriyanto", "ibu": "Tati Rokayah", "kk": "3271040203070037", "alamat": "Sindang Sari Lembur Situ Desa/Kel. Balungbangjaya"}, {"no": 41, "nama": "Namira Najwa Farahah", "nipd": "252610014", "jk": "P", "nisn": "0095444590", "ttl": "Pontianak, 2009-12-05", "nik": "6112014512090002", "rombel": "Kelas 11", "ayah": "Dwi Apriyanto", "ibu": "Heni Maryati", "kk": "6112011611160001", "alamat": "Jalan wr. supratman no. 20 kauman"}, {"no": 42, "nama": "NANDA ALISAPUTRI", "nipd": "-", "jk": "P", "nisn": "3109934587", "ttl": "SABANG, 2010-07-14", "nik": "1172025407100001", "rombel": "Kelas 11", "ayah": "-", "ibu": "SISKA AGUSTIRA", "kk": "-", "alamat": "COT BAU Cot Bau"}, {"no": 43, "nama": "NAURA SHOBA ARYANI", "nipd": "262711021", "jk": "P", "nisn": "3107757221", "ttl": "JAKARTA, 2010-08-19", "nik": "3276095908100001", "rombel": "Kelas 10", "ayah": "ARIS DIANTO", "ibu": "YANI WAHYUNI", "kk": "3276090304100023", "alamat": "Jl. Persatuan Desa/Kel. Cinere"}, {"no": 44, "nama": "R. BUNGA TERATAI ISMI HAFSARI MALIK", "nipd": "262711022", "jk": "P", "nisn": "0116967308", "ttl": "SURABAYA, 2011-11-18", "nik": "3515185811110002", "rombel": "Kelas 10", "ayah": "R. ABDUL MALIK, ST", "ibu": "FAZAT ZAKIYAH", "kk": "3515181906120020", "alamat": "WISMA PERMAI REGENCY BLOK EE NO. 6 WARU"}, {"no": 45, "nama": "R. BUNGA TERATAI MARIA HAFSARI MALIK", "nipd": "252610015", "jk": "P", "nisn": "0102804962", "ttl": "SURABAYA, 2010-02-11", "nik": "3515185102100005", "rombel": "Kelas 11", "ayah": "R. ABDUL MALIK", "ibu": "FAZAT ZAKIYAH", "kk": "3515181906120020", "alamat": "WISMA PERMAI REGENCY BLOK EE NO. 6 Pepelegi"}, {"no": 46, "nama": "Radinka Amir Jiddan Aaqil", "nipd": "252610017", "jk": "L", "nisn": "0102005555", "ttl": "Trenggalek, 2010-05-06", "nik": "3503060605100002", "rombel": "Kelas 11", "ayah": "Bugar Galih Arso", "ibu": "Nita Annisa Alfi Azizah", "kk": "-", "alamat": "Perum Chandra Kirana Regency Blok A1-4 Watugede"}, {"no": 47, "nama": "RAHMAWATI", "nipd": "252610016", "jk": "P", "nisn": "3103815495", "ttl": "Jakarta, 2010-01-01", "nik": "3174094101101001", "rombel": "Kelas 11", "ayah": "ENTONG ALI", "ibu": "Nurlaelah", "kk": "3174090905160041", "alamat": "Lenteng Agung Lenteng Agung"}, {"no": 48, "nama": "RANDY NOVAL ALFIYANSAH", "nipd": "262711023", "jk": "L", "nisn": "0106456429", "ttl": "KAMPUNG BARU, 2010-11-11", "nik": "1806191111100002", "rombel": "Kelas 10", "ayah": "SUWAJI ARI", "ibu": "AHYANI", "kk": "3173062711170025", "alamat": "Kp. Cipondo Semanan"}, {"no": 49, "nama": "RIZKYANSYAH PRASETYO", "nipd": "262711024", "jk": "L", "nisn": "0104859975", "ttl": "JAKARTA, 2010-01-07", "nik": "3173060701100007", "rombel": "Kelas 10", "ayah": "Haryanto Prasetyo", "ibu": "ELISAH", "kk": "3173060501097627", "alamat": "Kp. Pangkalan Semanan"}, {"no": 50, "nama": "ROMDHON AL HAFIDZ", "nipd": "262711025", "jk": "L", "nisn": "0109101273", "ttl": "TEGAL, 2010-08-26", "nik": "3328132608100003", "rombel": "Kelas 10", "ayah": "OOS ROSA HARJANA", "ibu": "ARUM SARI", "kk": "3278052103170002", "alamat": "Perum Vania Regenci GNUNGGEDE"}, {"no": 51, "nama": "SABRINA ANIZA ZULFAH", "nipd": "262711026", "jk": "P", "nisn": "3115563342", "ttl": "JAKARTA, 2011-04-25", "nik": "3173016504111013", "rombel": "Kelas 10", "ayah": "RAMDONI", "ibu": "MUJEMAH", "kk": "3173012209111080", "alamat": "PONDOK SAMBI Duri Kosambi"}, {"no": 52, "nama": "Safa Azara", "nipd": "252610018", "jk": "P", "nisn": "0095777105", "ttl": "Brebes, 2009-10-14", "nik": "3329095410090002", "rombel": "Kelas 11", "ayah": "Katilam", "ibu": "Dawiroh", "kk": "3329090103074846", "alamat": "Jalan Raya Wangandalem Wangandalem"}, {"no": 53, "nama": "SITI NURANNISA HIDAYAT", "nipd": "262711027", "jk": "P", "nisn": "0101568703", "ttl": "BOGOR, 2010-10-17", "nik": "3201045710100003", "rombel": "Kelas 10", "ayah": "M SUDARSYAH HIDAYAT", "ibu": "SITI RUKMIANI", "kk": "3201040206100016", "alamat": "KP BOJONG HONJE GUNUNG GEULIS"}, {"no": 54, "nama": "SITI ROKHIMAH ALIFIA", "nipd": "262711028", "jk": "P", "nisn": "0092768460", "ttl": "JAKARTA, 2009-07-18", "nik": "3172035807091004", "rombel": "Kelas 10", "ayah": "NURSALIM", "ibu": "SUMYATI", "kk": "-", "alamat": "JL MAWAR I NO 21 TUGU UTARA"}, {"no": 55, "nama": "SITI SYIFA ROHMANI", "nipd": "252610020", "jk": "P", "nisn": "0095675465", "ttl": "BOGOR, 2009-04-30", "nik": "3201247004090007", "rombel": "Kelas 11", "ayah": "ABDUL ROHMAN", "ibu": "NINA HERLINA", "kk": "3201241310060053", "alamat": "Kp. Pendeuy Desa/Kel. Pandansari"}, {"no": 56, "nama": "SYAHLA SAKINATUNNISAA", "nipd": "262711029", "jk": "P", "nisn": "0107445609", "ttl": "TASIKMALAYA, 2010-07-09", "nik": "3278055008870012", "rombel": "Kelas 10", "ayah": "EKA KUSNENDAR", "ibu": "NUR SITI", "kk": "3278051710140005", "alamat": "SUKAPALA GUNUNGGEDE"}, {"no": 57, "nama": "Syifa Fauziah", "nipd": "252610021", "jk": "P", "nisn": "0095361109", "ttl": "Bekasi, 2009-12-26", "nik": "3216096612090003", "rombel": "Kelas 11", "ayah": "Ujang", "ibu": "Isah", "kk": "-", "alamat": "Mangku Negara Mekar Mukti"}, {"no": 58, "nama": "TALITA JELIANTI", "nipd": "252610024", "jk": "P", "nisn": "0103968823", "ttl": "BELANI, 2010-01-30", "nik": "1605047001100001", "rombel": "Kelas 11", "ayah": "TEGUH FIRMAN", "ibu": "FIPIN NATALIA", "kk": "-", "alamat": "DESA BELANI BELANI"}, {"no": 59, "nama": "TALITHA AMANDA", "nipd": "262711030", "jk": "P", "nisn": "0103665983", "ttl": "JAKARTA, 2010-07-05", "nik": "3172034507100001", "rombel": "Kelas 10", "ayah": "AMIRUDIN", "ibu": "SRI JAMILAH", "kk": "3172031607100044", "alamat": "JL. MAWAR GG I / 21 Desa/Kel. Tugu Utara"}, {"no": 60, "nama": "THESYA OKTAVIANSYAH", "nipd": "252610022", "jk": "P", "nisn": "0093392862", "ttl": "BOGOR, 2009-10-01", "nik": "3201194110090003", "rombel": "Kelas 11", "ayah": "TEGUH HARIYANSYAH", "ibu": "SARTIKA RAHMAWATI", "kk": "-", "alamat": "BABAKAN LEBAK BALUMBANG JAYA"}, {"no": 61, "nama": "THITANIA AURELYA VIONA", "nipd": "262711031", "jk": "P", "nisn": "0112920718", "ttl": "BOGOR, 2011-08-02", "nik": "3201044208110005", "rombel": "Kelas 10", "ayah": "NANA MULYANA", "ibu": "PIPIH MARYATI", "kk": "3201010607110035", "alamat": "KP BOJONG HONJE Desa/Kel. Gunung Geulis"}, {"no": 62, "nama": "TIARA NUR'AINI", "nipd": "262711032", "jk": "P", "nisn": "0109179808", "ttl": "JAKARTA, 2010-12-29", "nik": "3276046912100001", "rombel": "Kelas 10", "ayah": "Giman", "ibu": "KARSINI", "kk": "3276042802080066", "alamat": "Jl. H. Rimin No.14 Krukut"}, {"no": 63, "nama": "ZIDAN LUTHFI MUSYARROF", "nipd": "262711033", "jk": "L", "nisn": "0118098295", "ttl": "Batam, 2011-05-01", "nik": "2171110105110003", "rombel": "Kelas 10", "ayah": "ROHMAN", "ibu": "SITI NURJANAH", "kk": "2171111310090043", "alamat": "Jl.Raya Dilampung No.95 Kenali Kenali"}];
+
+        const dataPTK = [{"no": 1, "nama": "Ahmad Muhajir", "jenis": "Guru", "nuptk": "9544772673130423", "nik": "1602111212940005", "jk": "L", "ttl": "Sungai Pedada, 1994-12-12", "hp": "081212910609", "status": "GTY/PTY", "email": "ahmadmuhajirmuhajir2000@gmail.com"}, {"no": 2, "nama": "DINAR INDRIYANI", "jenis": "Guru", "nuptk": "-", "nik": "3201305503010006", "jk": "P", "ttl": "BOGOR, 2001-03-15", "hp": "6285659506368", "status": "GTY/PTY", "email": "dinarindriyani15@gmail.com"}, {"no": 3, "nama": "Irvan Sanusi", "jenis": "Guru", "nuptk": "8446767668130223", "nik": "3278051411890005", "jk": "L", "ttl": "Tasikmalaya, 1989-11-14", "hp": "081385086304", "status": "GTY/PTY", "email": "irvansanusi.999@gmail.com"}, {"no": 4, "nama": "Ni'matullah", "jenis": "Guru", "nuptk": "0636764665130242", "nik": "3604010403860626", "jk": "L", "ttl": "Serang, 1986-03-04", "hp": "081779175865", "status": "GTY/PTY", "email": "imat.smaiticmgugel@gmail.com"}, {"no": 5, "nama": "Nining", "jenis": "Guru", "nuptk": "6442773674230192", "nik": "3213215001950002", "jk": "P", "ttl": "Subang, 1995-01-10", "hp": "089631361447", "status": "GTY/PTY", "email": "niningsahara2@gmail.com"}, {"no": 6, "nama": "Ratnah Ismuaimah Talapuka", "jenis": "Guru", "nuptk": "8755772673230292", "nik": "3674016312940002", "jk": "P", "ttl": "Tangerang, 1994-04-23", "hp": "089675073003", "status": "GTY/PTY", "email": "ratnatalapuka@gmail.com"}, {"no": 7, "nama": "Siti Nursaffanah Hasna", "jenis": "Guru", "nuptk": "7146776677230163", "nik": "3174015408980007", "jk": "P", "ttl": "Purworejo, 1998-08-14", "hp": "081295075072", "status": "GTY/PTY", "email": "nursaffanahhasna@gmail.com"}, {"no": 8, "nama": "Sultani", "jenis": "Guru", "nuptk": "5838764665130292", "nik": "7308100605860001", "jk": "L", "ttl": "Kelling, 1986-05-06", "hp": "085259637503", "status": "GTY/PTY", "email": "sultani.smaiticmgugel@gmail.com"}, {"no": 9, "nama": "Willy Dwi Irawan", "jenis": "Guru", "nuptk": "2448774675130133", "nik": "3210071611960001", "jk": "L", "ttl": "Majalengka, 1996-11-16", "hp": "085156475019", "status": "GTY/PTY", "email": "willy.smaiticmgugel@gmail.com"}, {"no": 10, "nama": "Zalfa Nur Alya", "jenis": "Guru", "nuptk": "-", "nik": "3201045809020001", "jk": "P", "ttl": "Cilacap, 2002-09-18", "hp": "085811295574", "status": "GTY/PTY", "email": "zalfanuralya9@gmail.com"}, {"no": 11, "nama": "Abdul Azis Al Hakim", "jenis": "Tenaga Kependidikan", "nuptk": "1551751652130052", "nik": "3271031902730008", "jk": "L", "ttl": "Bandung, 1973-02-19", "hp": "081288225574", "status": "GTY/PTY", "email": "aziz05@gmail.com"}, {"no": 12, "nama": "Asep Ibrahim", "jenis": "Tenaga Kependidikan", "nuptk": "-", "nik": "3201102210920002", "jk": "L", "ttl": "Bogor, 1992-10-22", "hp": "082123437047", "status": "GTY/PTY", "email": "Ibrahimsatria02@gmail.com"}, {"no": 13, "nama": "Tauhid Dwijayanto", "jenis": "Tenaga Kependidikan", "nuptk": "8242774675130173", "nik": "3301141009960002", "jk": "L", "ttl": "Cilacap, 1996-09-10", "hp": "088239479302", "status": "GTY/PTY", "email": "tauhiddwijayanto78@gmail.com"}, {"no": 14, "nama": "Zahrudin", "jenis": "Kepala Sekolah", "nuptk": "3342751653110093", "nik": "3174061010730005", "jk": "L", "ttl": "Jakarta, 1973-10-10", "hp": "082123457437", "status": "GTY/PTY", "email": "zahrudinidris@gmail.com"}];
+
+        const dataPembelajaran = [{"rombel": "Kelas 10", "mapel": "Matematika (Umum)", "guru": "Nining", "nuptk": "6442773674230192", "jjm": "4", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Bahasa Indonesia", "guru": "DINAR INDRIYANI", "nuptk": "-", "jjm": "4", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Pendidikan Agama Islam dan Budi Pekerti", "guru": "Ahmad Muhajir", "nuptk": "9544772673130423", "jjm": "3", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Ekonomi", "guru": "Irvan Sanusi", "nuptk": "8446767668130223", "jjm": "3", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Biologi", "guru": "Siti Nursaffanah Hasna", "nuptk": "7146776677230163", "jjm": "3", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Geografi", "guru": "Willy Dwi Irawan", "nuptk": "2448774675130133", "jjm": "3", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Pendidikan Pancasila", "guru": "Ratnah Ismuaimah Talapuka", "nuptk": "8755772673230292", "jjm": "2", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Fisika", "guru": "Ni'matullah", "nuptk": "0636764665130242", "jjm": "3", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Informatika", "guru": "Nining", "nuptk": "6442773674230192", "jjm": "2", "siswa": "33"}, {"rombel": "Kelas 10", "mapel": "Sosiologi", "guru": "Zalfa Nur Alya", "nuptk": "-", "jjm": "3", "siswa": "33"}, {"rombel": "Kelas 11", "mapel": "Matematika (Umum)", "guru": "Nining", "nuptk": "6442773674230192", "jjm": "4", "siswa": "24"}, {"rombel": "Kelas 11", "mapel": "Pendidikan Agama Islam dan Budi Pekerti", "guru": "Sultani", "nuptk": "5838764665130292", "jjm": "3", "siswa": "24"}, {"rombel": "Kelas 11", "mapel": "Bahasa Indonesia", "guru": "DINAR INDRIYANI", "nuptk": "-", "jjm": "4", "siswa": "24"}, {"rombel": "Kelas 11", "mapel": "Pendidikan Pancasila", "guru": "Ratnah Ismuaimah Talapuka", "nuptk": "8755772673230292", "jjm": "2", "siswa": "24"}, {"rombel": "Kelas 11", "mapel": "Muatan Lokal Potensi Daerah", "guru": "Sultani", "nuptk": "5838764665130292", "jjm": "2", "siswa": "24"}, {"rombel": "Kelas 12", "mapel": "Pendidikan Agama Islam dan Budi Pekerti", "guru": "Ahmad Muhajir", "nuptk": "9544772673130423", "jjm": "3", "siswa": "6"}, {"rombel": "Kelas 12", "mapel": "Pendidikan Pancasila", "guru": "Ratnah Ismuaimah Talapuka", "nuptk": "8755772673230292", "jjm": "2", "siswa": "6"}, {"rombel": "Kelas 12", "mapel": "Matematika (Umum)", "guru": "Nining", "nuptk": "6442773674230192", "jjm": "4", "siswa": "6"}, {"rombel": "Kelas 12", "mapel": "Bahasa Indonesia", "guru": "DINAR INDRIYANI", "nuptk": "-", "jjm": "4", "siswa": "6"}, {"rombel": "Kelas 12", "mapel": "Muatan Lokal Potensi Daerah", "guru": "Ahmad Muhajir", "nuptk": "9544772673130423", "jjm": "2", "siswa": "6"}, {"rombel": "Bahasa Inggris", "mapel": "Bahasa Inggris Tingkat Lanjut", "guru": "Zahrudin", "nuptk": "3342751653110093", "jjm": "4", "siswa": "23"}, {"rombel": "Biologi 11", "mapel": "Biologi", "guru": "Siti Nursaffanah Hasna", "nuptk": "7146776677230163", "jjm": "5", "siswa": "11"}, {"rombel": "Ekonomi", "mapel": "Ekonomi", "guru": "Irvan Sanusi", "nuptk": "8446767668130223", "jjm": "5", "siswa": "12"}, {"rombel": "Fisika", "mapel": "Fisika", "guru": "Ni'matullah", "nuptk": "0636764665130242", "jjm": "4", "siswa": "12"}, {"rombel": "Geografi", "mapel": "Geografi", "guru": "Willy Dwi Irawan", "nuptk": "2448774675130133", "jjm": "5", "siswa": "11"}, {"rombel": "Kimia", "mapel": "Kimia", "guru": "Ni'matullah", "nuptk": "0636764665130242", "jjm": "4", "siswa": "11"}, {"rombel": "MTK TL", "mapel": "Matematika Tingkat Lanjut", "guru": "Nining", "nuptk": "6442773674230192", "jjm": "5", "siswa": "12"}, {"rombel": "Biologi", "mapel": "Biologi", "guru": "Siti Nursaffanah Hasna", "nuptk": "7146776677230163", "jjm": "5", "siswa": "6"}, {"rombel": "Ekonomi", "mapel": "Ekonomi", "guru": "Irvan Sanusi", "nuptk": "8446767668130223", "jjm": "5", "siswa": "5"}, {"rombel": "Geografi", "mapel": "Geografi", "guru": "Willy Dwi Irawan", "nuptk": "2448774675130133", "jjm": "5", "siswa": "4"}, {"rombel": "Sosiologi", "mapel": "Sosiologi", "guru": "Zalfa Nur Alya", "nuptk": "-", "jjm": "4", "siswa": "4"}];
+
+        let activeTab = 'dash';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPD(dataPD);
+            renderPTK(dataPTK);
+            renderPemb(dataPembelajaran);
+            initCharts();
+        });
+
+        function switchTab(tab) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-b-2', 'border-emerald-600', 'text-emerald-700', 'bg-white', 'shadow-sm', 'font-bold');
+                btn.classList.add('text-slate-500', 'font-semibold');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            const currentBtn = document.getElementById(`tab-${tab}`);
+            currentBtn.classList.add('border-b-2', 'border-emerald-600', 'text-emerald-700', 'bg-white', 'shadow-sm', 'font-bold');
+            currentBtn.classList.remove('text-slate-500', 'font-semibold');
+
+            document.getElementById(`content-${tab}`).classList.remove('hidden');
+
+            const searchContainer = document.getElementById('searchContainer');
+            if (tab === 'dash') {
+                searchContainer.classList.add('hidden');
+            } else {
+                searchContainer.classList.remove('hidden');
+                filterData();
+            }
+        }
+
+        // INITIALIZE CHART.JS CHARTS
+        function initCharts() {
+            // Chart 1: Siswa per Kelas
+            new Chart(document.getElementById('chartSiswaKelas'), {
+                type: 'bar',
+                data: {
+                    labels: ['Kelas 10', 'Kelas 11', 'Kelas 12'],
+                    datasets: [{
+                        label: 'Jumlah Siswa',
+                        data: [33, 24, 6],
+                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+                }
+            });
+
+            // Chart 2: Gender Siswa
+            new Chart(document.getElementById('chartGenderSiswa'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Laki-laki (28)', 'Perempuan (35)'],
+                    datasets: [{
+                        data: [28, 35],
+                        backgroundColor: ['#3b82f6', '#ec4899']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Chart 3: NUPTK PTK
+            new Chart(document.getElementById('chartNuptkPTK'), {
+                type: 'pie',
+                data: {
+                    labels: ['Memiliki NUPTK (11)', 'Belum NUPTK (3)'],
+                    datasets: [{
+                        data: [11, 3],
+                        backgroundColor: ['#059669', '#f97316']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Chart 4: Guru JJM
+            new Chart(document.getElementById('chartGuruJJM'), {
+                type: 'bar',
+                data: {
+                    labels: ['Nining', 'Irvan Sanusi', 'Siti Nursaffanah', 'Willy Dwi Irawan', 'DINAR INDRIYANI', "Ni'matullah", 'Ahmad Muhajir', 'Zalfa Nur Alya', 'Ratnah Ismuaimah', 'Sultani', 'Zahrudin'],
+                    datasets: [{
+                        label: 'Jam Mengajar (JJM)',
+                        data: [19, 13, 13, 13, 12, 11, 8, 7, 6, 5, 4],
+                        backgroundColor: '#14b8a6',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { beginAtZero: true } }
+                }
+            });
+        }
+
+        // RENDER TABLES
+        function renderPD(items) {
+            const tbody = document.getElementById('table-pd-body');
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">Data siswa tidak ditemukan</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map((item, idx) => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-4 py-3 text-xs font-semibold text-slate-400">${idx + 1}</td>
+                    <td class="px-4 py-3 font-semibold text-slate-800">${item.nama}</td>
+                    <td class="px-4 py-3"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-medium rounded-full">${item.rombel}</span></td>
+                    <td class="px-4 py-3 font-mono text-slate-700">
+                        ${item.nisn}
+                        <button onclick="copyToClipboard('${item.nisn}', 'NISN')" class="ml-1 text-slate-400 hover:text-emerald-600"><i class="fa-regular fa-copy"></i></button>
+                    </td>
+                    <td class="px-4 py-3 font-mono text-slate-700">
+                        ${item.nik}
+                        <button onclick="copyToClipboard('${item.nik}', 'NIK')" class="ml-1 text-slate-400 hover:text-emerald-600"><i class="fa-regular fa-copy"></i></button>
+                    </td>
+                    <td class="px-4 py-3">${item.jk === 'L' ? '<span class="text-blue-600 font-bold">L</span>' : '<span class="text-pink-600 font-bold">P</span>'}</td>
+                    <td class="px-4 py-3 text-xs text-slate-500">${item.ttl}</td>
+                    <td class="px-4 py-3 text-center">
+                        <button onclick='showDetailPD(${JSON.stringify(item)})' class="px-3 py-1 bg-slate-100 hover:bg-emerald-50 text-emerald-700 rounded-lg text-xs font-semibold transition-all">
+                            <i class="fa-solid fa-eye mr-1"></i>Detail
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPTK(items) {
+            const tbody = document.getElementById('table-ptk-body');
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">Data PTK tidak ditemukan</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map((item, idx) => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-4 py-3 text-xs font-semibold text-slate-400">${idx + 1}</td>
+                    <td class="px-4 py-3 font-semibold text-slate-800">${item.nama}</td>
+                    <td class="px-4 py-3"><span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-medium rounded-full">${item.jenis}</span></td>
+                    <td class="px-4 py-3 font-mono text-slate-700">
+                        ${item.nuptk}
+                        ${item.nuptk !== '-' ? `<button onclick="copyToClipboard('${item.nuptk}', 'NUPTK')" class="ml-1 text-slate-400 hover:text-indigo-600"><i class="fa-regular fa-copy"></i></button>` : ''}
+                    </td>
+                    <td class="px-4 py-3 font-mono text-slate-700">
+                        ${item.nik}
+                        <button onclick="copyToClipboard('${item.nik}', 'NIK')" class="ml-1 text-slate-400 hover:text-indigo-600"><i class="fa-regular fa-copy"></i></button>
+                    </td>
+                    <td class="px-4 py-3">${item.jk}</td>
+                    <td class="px-4 py-3 text-xs font-mono">${item.hp}</td>
+                    <td class="px-4 py-3 text-center">
+                        <button onclick='showDetailPTK(${JSON.stringify(item)})' class="px-3 py-1 bg-slate-100 hover:bg-indigo-50 text-indigo-700 rounded-lg text-xs font-semibold transition-all">
+                            <i class="fa-solid fa-eye mr-1"></i>Detail
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPemb(items) {
+            const tbody = document.getElementById('table-pemb-body');
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400">Data pembelajaran tidak ditemukan</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map((item) => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-4 py-3 font-semibold text-emerald-800">${item.rombel}</td>
+                    <td class="px-4 py-3 font-medium text-slate-800">${item.mapel}</td>
+                    <td class="px-4 py-3 text-slate-700">${item.guru}</td>
+                    <td class="px-4 py-3 font-mono text-xs text-slate-500">${item.nuptk}</td>
+                    <td class="px-4 py-3 text-center font-bold text-slate-700">${item.jjm} jam</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.siswa} siswa</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterData() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const rombelVal = document.getElementById('rombelFilter').value;
+            const clearBtn = document.getElementById('clearBtn');
+
+            clearBtn.classList.toggle('hidden', query === '');
+
+            if (activeTab === 'pd') {
+                const filtered = dataPD.filter(item => {
+                    const matchQuery = item.nama.toLowerCase().includes(query) || 
+                                       item.nisn.includes(query) || 
+                                       item.nik.includes(query) || 
+                                       item.nipd.includes(query);
+                    const matchRombel = rombelVal === "" || item.rombel === rombelVal;
+                    return matchQuery && matchRombel;
+                });
+                renderPD(filtered);
+            } else if (activeTab === 'ptk') {
+                const filtered = dataPTK.filter(item => {
+                    return item.nama.toLowerCase().includes(query) || 
+                           item.nuptk.includes(query) || 
+                           item.nik.includes(query) ||
+                           item.jenis.toLowerCase().includes(query);
+                });
+                renderPTK(filtered);
+            } else if (activeTab === 'pemb') {
+                const filtered = dataPembelajaran.filter(item => {
+                    const matchQuery = item.mapel.toLowerCase().includes(query) || 
+                                       item.guru.toLowerCase().includes(query) || 
+                                       item.rombel.toLowerCase().includes(query);
+                    const matchRombel = rombelVal === "" || item.rombel === rombelVal;
+                    return matchQuery && matchRombel;
+                });
+                renderPemb(filtered);
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            filterData();
+        }
+
+        function copyToClipboard(text, label) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`${label} (${text}) berhasil disalin!`);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        function showDetailPD(item) {
+            document.getElementById('modalTitle').innerText = `Detail Siswa: ${item.nama}`;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div><span class="text-xs text-slate-400 block">Rombel</span> <span class="font-semibold text-slate-800">${item.rombel}</span></div>
+                    <div><span class="text-xs text-slate-400 block">NIPD</span> <span class="font-mono font-semibold text-slate-800">${item.nipd}</span></div>
+                    <div><span class="text-xs text-slate-400 block">NISN</span> <span class="font-mono font-bold text-emerald-700">${item.nisn}</span></div>
+                    <div><span class="text-xs text-slate-400 block">NIK Siswa</span> <span class="font-mono font-bold text-emerald-700">${item.nik}</span></div>
+                    <div><span class="text-xs text-slate-400 block">Tempat, Tgl Lahir</span> <span class="font-medium text-slate-700">${item.ttl}</span></div>
+                    <div><span class="text-xs text-slate-400 block">Jenis Kelamin</span> <span class="font-medium text-slate-700">${item.jk === 'L' ? 'Laki-laki' : 'Perempuan'}</span></div>
+                </div>
+                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 space-y-2">
+                    <h4 class="font-bold text-emerald-900 text-xs uppercase tracking-wider">Data Orang Tua & Keluarga</h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div><span class="text-slate-500">Nama Ayah:</span> <p class="font-semibold text-slate-800">${item.ayah || '-'}</p></div>
+                        <div><span class="text-slate-500">Nama Ibu:</span> <p class="font-semibold text-slate-800">${item.ibu || '-'}</p></div>
+                        <div><span class="text-slate-500">No KK:</span> <p class="font-mono font-semibold text-slate-800">${item.kk || '-'}</p></div>
+                        <div><span class="text-slate-500">Alamat:</span> <p class="font-medium text-slate-800">${item.alamat || '-'}</p></div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function showDetailPTK(item) {
+            document.getElementById('modalTitle').innerText = `Detail PTK: ${item.nama}`;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div><span class="text-xs text-slate-400 block">Jenis PTK</span> <span class="font-semibold text-slate-800">${item.jenis}</span></div>
+                    <div><span class="text-xs text-slate-400 block">Status Kepegawaian</span> <span class="font-medium text-slate-800">${item.status}</span></div>
+                    <div><span class="text-xs text-slate-400 block">NUPTK</span> <span class="font-mono font-bold text-indigo-700">${item.nuptk}</span></div>
+                    <div><span class="text-xs text-slate-400 block">NIK</span> <span class="font-mono font-bold text-indigo-700">${item.nik}</span></div>
+                    <div><span class="text-xs text-slate-400 block">Tempat, Tgl Lahir</span> <span class="font-medium text-slate-700">${item.ttl}</span></div>
+                    <div><span class="text-xs text-slate-400 block">No HP / WhatsApp</span> <span class="font-medium text-slate-700">${item.hp}</span></div>
+                    <div class="col-span-2"><span class="text-xs text-slate-400 block">Email</span> <span class="font-mono text-slate-700">${item.email}</span></div>
+                </div>
+            `;
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
